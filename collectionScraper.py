@@ -12,7 +12,7 @@ urlInput = input('Enter the collection URL: ')
 url = urlInput #URL for the collection
 page = requests.get(url)
 soup = BeautifulSoup(page.content, "html.parser")
-
+collectionTitle = soup.find('title').text[16:]
 
 urlList = soup.find_all('div', class_="workshopItem")
 nameList = []
@@ -41,5 +41,5 @@ for i in urlList:
         
 
 df = pd.DataFrame({'Mod Name': nameList, 'File Size (MB)':  sizeList, 'Mod Type': typeList, 'Link': linkList})
-df.to_excel('Mods.xlsx', sheet_name='All Mods', index=False)
+df.to_excel(collectionTitle+'.xlsx', sheet_name='All Mods', index=False)
 print('Jobs Done :D')
